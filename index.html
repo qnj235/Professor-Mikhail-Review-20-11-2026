@@ -1,0 +1,207 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Professor Mikhail Spektor — The Review Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:wght@500;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+:root{--cream:#fbf5e9;--ivory:#fffaf0;--pink:#e9b4c0;--sage:#a9c1a0;--lav:#c6b6e2;--yel:#f3dc92;--ink:#4a3b3b;--soft:#7a6a68}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream) radial-gradient(#e9dcc4 1px,transparent 1.2px) 0 0/22px 22px;color:var(--ink);font:17px/1.6 Nunito,sans-serif;min-height:100vh}
+h1,h2,h3{font-family:Fraunces,serif;line-height:1.15;margin:.2em 0 .4em}h1{font-size:clamp(2rem,5vw,3.4rem)}h2{font-size:clamp(1.6rem,4vw,2.4rem)}
+.hand{font-family:Caveat,cursive;font-size:1.5rem;color:#b7677c}
+main{max-width:1100px;margin:auto;padding:28px 18px 80px}
+.btn{display:inline-block;border:2px solid var(--ink);background:var(--pink);color:var(--ink);padding:.7em 1.5em;border-radius:40px;font:600 1.05rem Nunito;cursor:pointer;text-decoration:none;box-shadow:3px 4px 0 var(--ink);transition:.15s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 5px 0 var(--ink)}.btn:disabled{opacity:.5;cursor:wait}.btn.alt{background:var(--ivory)}.btn.sage{background:var(--sage)}
+.paper{background:var(--ivory);border:1.5px solid #e4d6bb;border-radius:6px;padding:22px;box-shadow:0 6px 18px rgba(120,90,60,.15)}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;min-height:80vh}
+.frame{background:#fff;padding:14px 14px 50px;transform:rotate(3deg);box-shadow:0 10px 26px rgba(90,60,50,.25);position:relative;max-width:420px;margin:auto}
+.frame img,.frame .ph{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#efe3cf}.ph{display:grid;place-items:center;text-align:center;padding:20px;color:var(--soft)}
+.frame:before{content:"";position:absolute;top:-14px;left:35%;width:110px;height:30px;background:rgba(243,220,146,.8);transform:rotate(-4deg)}
+.frame .cap{position:absolute;bottom:10px;left:0;right:0;text-align:center}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.role{display:block;text-decoration:none;color:inherit;padding:34px 26px;border-radius:8px;border:2px solid var(--ink);box-shadow:5px 6px 0 var(--ink);transition:.2s;text-align:center}
+.role:hover{transform:rotate(-1.5deg) translateY(-4px)}.role h3{font-size:1.6rem}
+label{display:block;font-weight:600;margin:12px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px 12px;border:1.5px solid #cdbb98;border-radius:8px;background:#fff;color:var(--ink)}
+textarea{min-height:130px;resize:vertical}small,.count{color:var(--soft)}
+.builder{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:26px;align-items:start;margin-top:20px}
+#stage{background:#fff;border:2px dashed #cdbb98;border-radius:10px;padding:8px}#stage svg{width:100%;height:auto;display:block;touch-action:none}
+.fl{cursor:grab;filter:drop-shadow(1.5px 2px 0 rgba(0,0,0,.2))}.pal{display:flex;flex-wrap:wrap;gap:8px}
+.pal button{width:62px;height:70px;border:1.5px solid #dccdae;border-radius:8px;background:#fff;cursor:pointer;padding:2px}.pal button:hover{background:var(--yel)}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid #fff;outline:2px solid #cdbb98;cursor:pointer;padding:0}.sw.on,.pal button.on{outline:3px solid var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.tog{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}.tog .btn.on{background:var(--sage)}
+.stars{font-size:3rem;letter-spacing:6px}.star{background:none;border:0;font-size:3.4rem;cursor:pointer;color:#d8cdb8;transition:.15s;padding:0 4px}
+.star.on{color:#f0b429;transform:scale(1.12)}.star.pop{animation:pop .4s}@keyframes pop{50%{transform:scale(1.5) rotate(15deg)}}
+.avg{background:linear-gradient(90deg,#f0b429 var(--p),#d8cdb8 0);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:2.6rem;letter-spacing:4px}
+.center{text-align:center}.err{color:#b3374f;font-weight:600;min-height:1.4em}
+.petal{position:fixed;top:-30px;width:16px;height:20px;background:var(--pink);border-radius:50% 0 50% 0;animation:fall linear infinite;opacity:.85;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg) translateX(60px)}}
+.wall{columns:3 260px;column-gap:22px;margin-top:24px}
+.card{display:block;width:100%;break-inside:avoid;margin:0 0 22px;padding:14px;border:1.5px solid #dccdae;border-radius:6px;cursor:pointer;text-align:center;font:inherit;color:inherit;box-shadow:0 6px 14px rgba(100,70,50,.18);transition:.2s;background:var(--ivory)}
+.card:hover{transform:rotate(0) translateY(-5px)!important}.card:nth-child(3n+1){transform:rotate(-1.6deg);background:#fbe4ea}.card:nth-child(3n+2){transform:rotate(1.2deg);background:#eaf1e4}.card:nth-child(3n){transform:rotate(-.6deg);background:#ece5f6}
+.card svg{width:100%;max-width:230px;height:auto}.who{font-family:Caveat;font-size:1.5rem;line-height:1.1}.who small{display:block;font:.85rem Nunito}
+.ov{position:fixed;inset:0;background:rgba(74,59,59,.55);display:none;overflow-y:auto;z-index:50;padding:20px}.ov.show{display:block}
+.pane{max-width:560px;margin:20px auto;text-align:center}.pane>svg{width:min(330px,80%)}
+.close{position:sticky;top:0;float:right;background:#fff;border:2px solid var(--ink);border-radius:50%;width:40px;height:40px;font-size:1.3rem;cursor:pointer}
+.wl,.wr{transition:transform .9s cubic-bezier(.3,1.3,.5,1);transform-origin:150px 352px}.rb{transition:opacity .5s}
+.open .wl{transform:rotate(-42deg) translate(-14px,10px)}.open .wr{transform:rotate(42deg) translate(14px,10px)}.open .rb{opacity:0}.open .bqg{transform:translateY(-14px) scale(1.05)}.bqg{transition:.9s;transform-origin:150px 300px}
+.flap{transition:transform .7s;transform-origin:150px 8px}.paperin{transition:transform .9s .5s}.open .flap{transform:scaleY(-1)}.open .paperin{transform:translateY(-120px)}
+.letter{background:#fffdf6 repeating-linear-gradient(transparent 0 31px,#e3dcc8 31px 32px);text-align:left;padding:22px 24px;margin-top:14px;border-radius:4px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(40px);transition:.8s .7s;white-space:pre-wrap;line-height:32px}
+.open~.letter,.letter.in{opacity:1;transform:none}.letter h4{margin:10px 0 0;font:600 1rem/1.3 Nunito;color:#b7677c}.letter p{margin:0}
+.hl{font-family:Caveat;font-size:1.6rem;line-height:1.2;white-space:normal;background:var(--yel);padding:8px 12px;border-radius:6px;margin:6px 0;display:block}
+.final{margin-top:50px;background:linear-gradient(#fbe4ea,#ece5f6);padding:34px;border-radius:12px;border:2px solid var(--ink)}
+.qr{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:22px;text-align:left}.qr svg{width:170px;height:170px;background:#fff;padding:6px;border-radius:6px}
+.demo{background:var(--yel);text-align:center;font-size:.85rem;padding:4px}
+@media(max-width:760px){.hero,.builder,.cards{grid-template-columns:1fr}.hero{min-height:0;gap:24px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div id="banner"></div><main id="app"></main><div class="ov" id="ov"></div>
+<script>
+// ===== CONFIG: paste your Supabase values (see README) =====
+const CFG={url:'',key:''};
+const MAPS='https://maps.app.goo.gl/Ja9HWJYvmb2qrzFe8';
+const sb=(CFG.url&&window.supabase)?supabase.createClient(CFG.url,CFG.key):null;
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fresh=()=>({id:crypto.randomUUID(),name:'',courses:'',flowers:[],wrap:'pink',ribbon:'#d3606b',color:'#e8a0b4',sel:-1,mode:'freestyle',free:'',g:['','',''],rating:0,sent:false});
+let D;try{D=JSON.parse(sessionStorage.getItem('draft'))||fresh()}catch(e){D=fresh()}
+const keep=()=>{try{sessionStorage.setItem('draft',JSON.stringify(D))}catch(e){}};
+const words=s=>(s.trim().match(/\S+/g)||[]);
+// ---------- paper-cut flowers ----------
+const F={
+rose:c=>`<circle r="24" fill="${c}"/><circle r="16" fill="#000" opacity=".1"/><circle r="15" fill="${c}"/><path d="M-9 0a9 9 0 1 1 9 9M-4 0a4 4 0 1 1 4 4" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="2"/>`,
+tulip:c=>`<path d="M-20-6Q-22 22 0 26Q22 22 20-6L10-24 0-8-10-24Z" fill="${c}"/><path d="M0-8Q-8 12 0 26Q8 12 0-8Z" fill="#000" opacity=".12"/>`,
+daisy:c=>[...Array(10)].map((_,i)=>`<ellipse cy="-17" rx="6" ry="13" transform="rotate(${i*36})" fill="${c}" stroke="#000" stroke-opacity=".15"/>`).join('')+`<circle r="8" fill="#f3c64f"/>`,
+sunflower:c=>[...Array(14)].map((_,i)=>`<ellipse cy="-21" rx="5" ry="12" transform="rotate(${i*25.7})" fill="${c}"/>`).join('')+`<circle r="12" fill="#7a4b2a"/><circle r="6" fill="#000" opacity=".2"/>`,
+lily:c=>[...Array(6)].map((_,i)=>`<path d="M0 0Q-11-16 0-32Q11-16 0 0Z" transform="rotate(${i*60})" fill="${c}" stroke="#000" stroke-opacity=".15"/>`).join('')+`<circle r="4" fill="#e9a23b"/>`,
+lavender:c=>[...Array(6)].map((_,i)=>`<ellipse cx="${i%2?-6:6}" cy="${-26+i*9}" rx="5" ry="8" fill="${c}" transform="rotate(${i%2?-25:25} ${i%2?-6:6} ${-26+i*9})"/>`).join(''),
+carnation:c=>[...Array(9)].map((_,i)=>`<circle cx="${17*Math.cos(i*.698)}" cy="${17*Math.sin(i*.698)}" r="9" fill="${c}"/>`).join('')+`<circle r="14" fill="${c}"/><circle r="7" fill="#000" opacity=".1"/>`,
+wild:c=>`<g transform="scale(.85)">`+[...Array(5)].map((_,i)=>`<circle cx="${11*Math.cos(i*1.257)}" cy="${11*Math.sin(i*1.257)}" r="8" fill="${c}"/>`).join('')+`<circle r="5" fill="#f3c64f"/></g>`,
+leaf:()=>`<path d="M0 0Q-16-22 0-46Q16-22 0 0Z" fill="#8fb184"/><path d="M0-4V-40" stroke="#000" stroke-opacity=".2" fill="none"/>`};
+const NAMES={rose:'Rose',tulip:'Tulip',daisy:'Daisy',sunflower:'Sunflower',lily:'Lily',lavender:'Lavender',carnation:'Carnation',wild:'Wildflower',leaf:'Leaf'};
+const COLORS=['#e8a0b4','#ee9b86','#f2cf6b','#b9a5dc','#fbf6ec','#d3606b'];
+const WRAPS={pink:{n:'Pink',c:'#f2b8c6'},cream:{n:'Cream vintage',c:'#f4e8cf',p:'l'},floral:{n:'Pastel floral',c:'#f8dfe6',p:'d'},kraft:{n:'Kraft',c:'#c9a37a',p:'l'},lav:{n:'Lavender',c:'#cdbfe8'}};
+const RIBBONS=['#d3606b','#7d9b74','#f2cf6b','#8a77c0','#ffffff'];
+function bq(b,edit){
+ const W=WRAPS[b.wrap]||WRAPS.pink,fl=(b.flowers||[]).map((f,i)=>({...f,i})),
+ ord=[...fl.filter(f=>f.t==='leaf'),...fl.filter(f=>f.t!=='leaf')];
+ const poly=(side)=>{const s=side==='l'?1:-1,p=`${150},352 ${150-s*102},160 150,205`;return `<polygon points="${p}" fill="${W.c}" stroke="#000" stroke-opacity=".25" stroke-width="2"/>`+(W.p?`<polygon points="${p}" fill="url(#pt-${W.p})"/>`:'')};
+ return `<svg viewBox="0 0 300 360" role="img" aria-label="Bouquet"><defs><pattern id="pt-d" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="#d3606b" opacity=".45"/><circle cx="11" cy="11" r="1.8" fill="#7d9b74" opacity=".5"/></pattern><pattern id="pt-l" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="1.5" height="8" fill="#8a6a4a" opacity=".2"/></pattern></defs>
+ <g class="bqg">${ord.filter(f=>f.t!=='leaf').map(f=>`<path d="M${f.x} ${f.y}Q${(f.x+150)/2} ${(f.y+205)/2+12} 150 210" stroke="#7d9b74" stroke-width="4" fill="none"/>`).join('')}
+ ${ord.map(f=>`<g class="fl" data-i="${f.i}" transform="translate(${f.x} ${f.y}) rotate(${f.r||0})">${(F[f.t]||F.wild)(f.c)}${edit&&f.i===b.sel?'<circle r="32" fill="none" stroke="#4a3b3b" stroke-width="2" stroke-dasharray="5 4"/>':''}</g>`).join('')}</g>
+ <g class="wl">${poly('l')}</g><g class="wr">${poly('r')}</g>
+ <g class="rb"><path d="M150 232l-26-14v28zM150 232l26-14v28z" fill="${b.ribbon||'#d3606b'}" stroke="#000" stroke-opacity=".3"/><circle cx="150" cy="232" r="6" fill="${b.ribbon||'#d3606b'}" stroke="#000" stroke-opacity=".3"/></g></svg>`}
+const env=()=>`<svg class="envs" viewBox="0 -110 300 310"><rect y="8" width="300" height="192" rx="6" fill="#e9a8b6"/><rect class="paperin" x="24" y="24" width="252" height="150" fill="#fff" stroke="#e4d6bb"/><path d="M0 200V14L150 118 300 14V200Z" fill="#f4c6d0" stroke="#000" stroke-opacity=".2"/><path class="flap" d="M0 8L150 118 300 8Z" fill="#eab0bd" stroke="#000" stroke-opacity=".25" stroke-width="2"/><circle cx="150" cy="110" r="12" fill="#d3606b"/></svg>`;
+const stars=n=>'★'.repeat(n)+'☆'.repeat(5-n);
+// ---------- data ----------
+async function saveRow(row){
+ if(sb){const{error}=await sb.from('submissions').insert(row);if(error&&error.code!=='23505')throw error}
+ else{const l=JSON.parse(localStorage.getItem('demo')||'[]');if(!l.some(x=>x.id===row.id))l.unshift({...row,created_at:new Date().toISOString()});localStorage.setItem('demo',JSON.stringify(l))}}
+async function loadRows(k){
+ if(sb){const{data,error}=await sb.rpc('get_submissions',{k});if(error)throw error;return data||[]}
+ return JSON.parse(localStorage.getItem('demo')||'[]')}
+// ---------- highlight (verbatim sentence from the real letter) ----------
+const POS=/\b(thank|grateful|appreciat|love|enjoy|great|best|amazing|inspir|kind|patient|helpful|brilliant|wonderful|favou?rite|passion|funny|awesome|support|respect|admire|fun)/i;
+const letterText=r=>r.letter.mode==='freestyle'?(r.letter.freestyle_text||''):[r.letter.guided_answers.thank_you,r.letter.guided_answers.special_memory,r.letter.guided_answers.three_words].filter(Boolean).join(' ');
+function highlight(r){const ss=(letterText(r).replace(/\s+/g,' ').match(/[^.!?]+[.!?]*/g)||[]).map(s=>s.trim());
+ const h=ss.find(s=>s.length>8&&s.length<=170&&POS.test(s));return h?`“${h}”`:'A personal note for you.'}
+const whoOf=r=>({n:r.student_name||(r.courses&&r.courses.length?'':'Anonymous'),c:(r.courses||[]).join(', ')});
+// ---------- router ----------
+const routes={'':landing,role,bouquet,letter,rate,thanks,professor};
+function go(){const h=(location.hash.replace(/^#\/?/,'')||'');closeOv();window.scrollTo(0,0);(routes[h]||landing)();
+ $('#banner').innerHTML=sb?'':'<div class="demo">Demo mode: no database is connected, so submissions stay in this browser only. See the README.</div>'}
+addEventListener('hashchange',go);
+function landing(){app.innerHTML=`<section class="hero"><div><p class="hand">a little page for a big teacher</p><h1>Professor Mikhail Spektor<br>The Review Page</h1>
+<p>Every professor leaves something behind in their students' lives. Some lessons stay with us longer than others.</p><p>We thought it was time to collect a few thoughts about Professor Mikhail Spektor.</p><p><b>Ready to leave a review?</b></p><a class="btn" href="#/role">Write a Review</a></div>
+<div class="frame"><img src="assets/professor.jpg" alt="Professor Mikhail Spektor" onerror="this.outerHTML='<div class=ph>Add the professor’s photo as<br><code>assets/professor.jpg</code></div>'"><div class="cap hand">our favourite professor</div></div></section>`}
+function role(){app.innerHTML=`<h2 class="center">Write a Review As...</h2><div class="cards">
+<a class="role" style="background:#fbe4ea" href="#/bouquet"><h3>I'm a student</h3><p>I have something to say about Professor Mikhail.</p></a>
+<a class="role" style="background:#ece5f6" href="#/professor"><h3>Wait, are you Professor Mikhail?</h3><p>Curious about what your students have to say?</p></a></div>`}
+function bouquet(){
+ app.innerHTML=`<h2>Customize Your Bouquet for Prof Mikhail</h2><p>Building a bouquet is totally optional. Skip it any time and just write a letter.</p>
+<div class="paper"><div class="row"><div style="flex:1;min-width:220px"><label for="nm">Your name (optional)</label><input type="text" id="nm" maxlength="80" value="${esc(D.name)}"></div>
+<div style="flex:1;min-width:220px"><label for="co">Courses you've taken with Prof. Mikhail (optional)</label><input type="text" id="co" maxlength="200" placeholder="e.g. Intro to Economics, Seminar" value="${esc(D.courses)}"></div></div>
+<small>Heads up: your letter, and any name or courses you add, will be visible to Professor Mikhail.</small></div>
+<div class="builder"><div id="stage"></div><div>
+<h3>1. Pick a flower</h3><div class="pal" id="pal"></div>
+<h3>2. Pick a colour</h3><div class="row" id="cols"></div>
+<p class="hand">Tap a flower in the bouquet to select it, drag to move it.</p>
+<div class="row"><button class="btn alt" id="rm">Remove selected</button><button class="btn alt" id="clr">Start over</button></div>
+<h3>3. Wrapping paper</h3><div class="row" id="wr"></div><h3>4. Ribbon</h3><div class="row" id="rbn"></div></div></div>
+<p class="center" style="margin-top:30px"><button class="btn sage" id="next">Write Him a Letter</button></p>`;
+ const st=$('#stage');let drag=false;
+ const draw=()=>{st.innerHTML=bq({...D,},true);keep()};
+ const ui=()=>{$('#pal').innerHTML=Object.keys(F).map(t=>`<button data-t="${t}" title="${NAMES[t]}" aria-label="Add ${NAMES[t]}"><svg viewBox="-34 -50 68 82">${F[t](D.color)}</svg></button>`).join('');
+  $('#cols').innerHTML=COLORS.map(c=>`<button class="sw ${c===D.color?'on':''}" data-c="${c}" style="background:${c}" aria-label="Colour ${c}"></button>`).join('');
+  $('#wr').innerHTML=Object.entries(WRAPS).map(([k,v])=>`<button class="sw ${k===D.wrap?'on':''}" data-w="${k}" style="background:${v.c}" title="${v.n}" aria-label="${v.n}"></button>`).join('');
+  $('#rbn').innerHTML=RIBBONS.map(c=>`<button class="sw ${c===D.ribbon?'on':''}" data-r="${c}" style="background:${c}" aria-label="Ribbon ${c}"></button>`).join('')};
+ const POSN=[[150,60],[105,90],[195,90],[70,125],[230,125],[150,115],[110,145],[190,145]];
+ $('#pal').onclick=e=>{const b=e.target.closest('button');if(!b)return;const t=b.dataset.t,n=D.flowers.length,p=POSN[n%8];
+  if(n>=30)return;D.flowers.push({t,c:t==='leaf'?'#8fb184':D.color,x:clamp(p[0]+(Math.random()*16-8),25,275),y:clamp(p[1]+(Math.random()*12-6),25,165),r:t==='leaf'?Math.round(Math.random()*120-60):Math.round(Math.random()*30-15)});D.sel=n;draw()};
+ $('#cols').onclick=e=>{const b=e.target.closest('button');if(!b)return;D.color=b.dataset.c;const f=D.flowers[D.sel];if(f&&f.t!=='leaf')f.c=D.color;ui();draw()};
+ $('#wr').onclick=e=>{const b=e.target.closest('button');if(b){D.wrap=b.dataset.w;ui();draw()}};
+ $('#rbn').onclick=e=>{const b=e.target.closest('button');if(b){D.ribbon=b.dataset.r;ui();draw()}};
+ $('#rm').onclick=()=>{if(D.sel>=0){D.flowers.splice(D.sel,1);D.sel=-1;draw()}};
+ $('#clr').onclick=()=>{D.flowers=[];D.sel=-1;draw()};
+ st.addEventListener('pointerdown',e=>{const g=e.target.closest('.fl');if(!g){D.sel=-1;draw();return}D.sel=+g.dataset.i;drag=true;draw();e.preventDefault()});
+ onpointermove=e=>{if(!drag)return;const svg=st.querySelector('svg'),p=new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse()),f=D.flowers[D.sel];if(f){f.x=clamp(p.x,25,275);f.y=clamp(p.y,25,165);draw()}};
+ onpointerup=()=>{drag=false};
+ $('#nm').oninput=e=>{D.name=e.target.value;keep()};$('#co').oninput=e=>{D.courses=e.target.value;keep()};
+ $('#next').onclick=()=>{location.hash='#/letter'};ui();draw()}
+function letter(){
+ app.innerHTML=`<h2>A Little Something for Prof Mikhail</h2><p class="hand">Flowers are lovely, but words can stay forever. What would you like to tell him?</p>
+<div class="tog"><button class="btn ${D.mode==='freestyle'?'on':''}" data-m="freestyle">Freestyle</button><button class="btn ${D.mode==='guided'?'on':''}" data-m="guided">Need Some Ideas?</button></div>
+<div class="paper" id="box"></div><p><small>Your letter, name and courses (if any) will be visible to Professor Mikhail.</small></p><p class="err" id="err" role="alert"></p>
+<button class="btn sage" id="save">Save the Letter and Rate This Professor</button>`;
+ const Q=[['Describe Prof. Mikhail in just three words.',500,1],['What is one thing you want to thank Prof. Mikhail for?',500],['Do you have any special moment, memory, favourite class, or experience with Prof. Mikhail that you would like to share?',500]];
+ const limit=(ta,max,cn)=>{const w=words(ta.value);if(w.length>max){ta.value=w.slice(0,max).join(' ');}cn.textContent=Math.min(w.length,max)+' / '+max+' words'};
+ const show=()=>{document.querySelectorAll('.tog .btn').forEach(b=>b.classList.toggle('on',b.dataset.m===D.mode));
+  $('#box').innerHTML=D.mode==='freestyle'?`<textarea id="f" style="min-height:260px" placeholder="Write whatever is on your mind..." aria-label="Your letter"></textarea><div class="count" id="fc"></div>`
+  :Q.map((q,i)=>`<label for="g${i}">${i+1}. ${q[0]}</label>${q[2]?`<input type="text" id="g${i}">`:`<textarea id="g${i}"></textarea>`}<div class="count" id="gc${i}"></div>`).join('');
+  if(D.mode==='freestyle'){const t=$('#f');t.value=D.free;limit(t,1500,$('#fc'));t.oninput=()=>{limit(t,1500,$('#fc'));D.free=t.value;keep()}}
+  else Q.forEach((q,i)=>{const t=$('#g'+i);t.value=D.g[i];limit(t,q[1],$('#gc'+i));t.oninput=()=>{limit(t,q[1],$('#gc'+i));D.g[i]=t.value;keep()}})};
+ document.querySelector('.tog').onclick=e=>{const b=e.target.closest('button');if(b){D.mode=b.dataset.m;keep();show()}};
+ $('#save').onclick=()=>{const ok=D.mode==='freestyle'?words(D.free).length>0:D.g.some(x=>words(x).length>0);
+  if(!ok){$('#err').textContent='Add at least a few words before continuing.';return}location.hash='#/rate'};show()}
+function rate(){
+ app.innerHTML=`<div class="center"><h2>One Last Thing...</h2><p><b>How would you rate Professor Mikhail?</b></p><div id="st" role="radiogroup" aria-label="Rating"></div><p class="hand">Every star comes with a little story.</p><p class="err" id="err" role="alert"></p><button class="btn sage" id="go">Save Your Answer</button></div>`;
+ const draw=(pop)=>{$('#st').innerHTML=[1,2,3,4,5].map(i=>`<button class="star ${i<=D.rating?'on':''} ${i===pop?'pop':''}" data-v="${i}" role="radio" aria-checked="${i===D.rating}" aria-label="${i} star${i>1?'s':''}">★</button>`).join('')};
+ $('#st').onclick=e=>{const b=e.target.closest('button');if(b){D.rating=+b.dataset.v;keep();draw(D.rating)}};draw();
+ $('#go').onclick=async()=>{if(!D.rating){$('#err').textContent='Pick a star rating first.';return}
+  if(D.sent){location.hash='#/thanks';return}const btn=$('#go');btn.disabled=true;$('#err').textContent='';
+  const fl=D.flowers.map(f=>({t:f.t,c:f.c,x:Math.round(f.x),y:Math.round(f.y),r:f.r||0})),g=D.mode==='guided';
+  const row={id:D.id,student_name:D.name.trim().slice(0,80)||null,courses:D.courses.split(',').map(s=>s.trim()).filter(Boolean).slice(0,10),
+   bouquet:{created:fl.length>0,flowers:fl,wrapping:D.wrap,ribbon:D.ribbon},
+   letter:{mode:D.mode,freestyle_text:g?'':words(D.free).slice(0,1500).join(' ')&&D.free.trim(),guided_answers:g?{three_words:D.g[0].trim(),thank_you:D.g[1].trim(),special_memory:D.g[2].trim()}:{}},rating:D.rating};
+  try{await saveRow(row);D.sent=true;keep();location.hash='#/thanks'}catch(e){console.error(e);$('#err').textContent='Hmm, that did not save. Check your connection and try again.';btn.disabled=false}}}
+function thanks(){
+ app.innerHTML=`<div class="center" style="padding-top:12vh"><h1>Thank You for Being Part of This!</h1><p>Your flowers, words, and little memories have found their way into this collection.</p><p>Thank you for making this gift a little more special.</p><p class="hand">Your little contribution has found its place here.</p></div>`;
+ for(let i=0;i<16;i++){const p=document.createElement('span');p.className='petal';p.style.cssText=`left:${Math.random()*100}%;animation-duration:${6+Math.random()*6}s;animation-delay:${Math.random()*5}s;background:${['#e9b4c0','#c6b6e2','#f3dc92','#a9c1a0'][i%4]}`;app.appendChild(p)}
+ D=fresh();keep()}
+// ---------- professor ----------
+async function professor(){
+ const k=sessionStorage.getItem('pk')||'';
+ if(sb&&!k){app.innerHTML=`<div class="paper center" style="max-width:440px;margin:15vh auto"><h2>For Professor Mikhail</h2><p>Enter the private access key you were given.</p><input type="text" id="k" autocomplete="off" aria-label="Access key"><p class="err" id="err"></p><button class="btn" id="o">Open</button></div>`;
+  $('#o').onclick=()=>{sessionStorage.setItem('pk',$('#k').value.trim());professor()};return}
+ app.innerHTML='<p class="center hand">Unwrapping everything...</p>';let rows;
+ try{rows=await loadRows(k)}catch(e){sessionStorage.removeItem('pk');app.innerHTML=`<div class="center"><p class="err">That key didn't open it, or the connection failed.</p><a class="btn" href="#/professor" onclick="setTimeout(go,0)">Try again</a></div>`;return}
+ window.ROWS=rows;const n=rows.length,avg=n?rows.reduce((a,r)=>a+r.rating,0)/n:0;
+ app.innerHTML=`<h2 class="center">If so,... here are what we have found about your students' opinions about you...</h2><p class="center hand">Every little note here comes from someone who crossed paths with you.</p>
+ ${n?'':'<p class="center">No gifts have arrived yet. Check back soon!</p>'}
+ <div class="wall">${rows.map((r,i)=>{const w=whoOf(r);return `<button class="card" data-i="${i}" aria-label="Open submission ${i+1}">${r.bouquet&&r.bouquet.created?bq(r.bouquet):env()}<div class="who">${esc(w.n)}${w.c?`<small>${esc(w.c)}</small>`:''}</div><div>${stars(r.rating)}</div></button>`}).join('')}</div>
+ <section class="final center"><h2>Thank you for your support and dedication.</h2><h2 class="hand" style="font-size:2.6rem">Happy Teacher's Day!!!</h2>
+ ${n?`<p class="avg" style="--p:${avg/5*100}%">★★★★★</p><p><b>${avg.toFixed(1)} / 5</b> from ${n} submission${n>1?'s':''}</p>`:'<p>Ratings will show up here once your students have written in.</p>'}
+ <div class="paper qr"><div style="flex:1;min-width:240px"><p>P.S. I heard that you needed some vegetarian restaurant recommendations (2 years ago...) and as I love exploring vegan/vegetarian restaurants, I have a list of places that you may want to visit in your free time. I hope it helps!!!</p><p><a href="${MAPS}" target="_blank" rel="noopener">${MAPS}</a></p></div><div class="center"><div id="qr"></div><small>Scan to explore the recommendations.</small></div></div></section>`;
+ try{const q=qrcode(0,'M');q.addData(MAPS);q.make();$('#qr').innerHTML=q.createSvgTag({cellSize:6,margin:2,scalable:true})}catch(e){}
+ document.querySelector('.wall').onclick=e=>{const c=e.target.closest('.card');if(c)openSub(+c.dataset.i)}}
+function openSub(i){const r=ROWS[i],w=whoOf(r),b=r.bouquet&&r.bouquet.created,g=r.letter.guided_answers||{};
+ const body=r.letter.mode==='freestyle'?`<p>${esc(r.letter.freestyle_text)}</p>`:`<h4>In three words</h4><p>${esc(g.three_words)||'—'}</p><h4>Thank you for...</h4><p>${esc(g.thank_you)||'—'}</p><h4>A memory</h4><p>${esc(g.special_memory)||'—'}</p>`;
+ const ov=$('#ov');ov.innerHTML=`<div class="pane"><button class="close" aria-label="Close">×</button><div id="vis">${b?bq(r.bouquet):env()}</div>
+ <div class="letter" id="lt"><div class="hand">${esc(w.n)}${w.c?` · <small>${esc(w.c)}</small>`:''}</div><div aria-label="${r.rating} out of 5 stars" style="color:#f0b429;font-size:1.6rem">${stars(r.rating)}</div><span class="hl">${esc(highlight(r))}</span>${body}</div></div>`;
+ ov.classList.add('show');ov.onclick=e=>{if(!e.target.closest('.letter,.pane>svg,#vis svg')||e.target.closest('.close')||e.target===ov)closeOv()};
+ ov.querySelector('.close').onclick=closeOv;setTimeout(()=>{$('#vis').classList.add('open');$('#lt').classList.add('in')},80)}
+function closeOv(){const o=$('#ov');o.classList.remove('show');o.innerHTML=''}
+addEventListener('keydown',e=>{if(e.key==='Escape')closeOv()});
+go();
+</script></body></html>
